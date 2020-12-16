@@ -1,0 +1,34 @@
+# YATDL - Golang
+
+Yet-Another-TodoList is project with intention of learning a programming language and how it will be used on web programming situation like REST API.
+
+Yet-Another-TodoList can be do in any ways to learn basic concept that can be done with creating the famous To Do List.
+
+Here what i already learn from this project :
+
+1. Golang
+   - struct
+   - interface
+   - pointer
+   - simple control flow
+2. Design Pattern
+   - Singleton
+3. Gin
+   - Basic project structure
+4. GORM
+   - Creating database connection
+   - Declaring model
+
+What i will to do next :
+
+1. Gin
+   - Securing using JWT middleware
+   - Using cors
+2. GORM
+   - CRUD
+3. Adding CI/CD
+4. Testing
+   - Unit testing using built-in go package
+   - Integration testing using built-in go package
+   - Unit testing in BDD way using ginkgo
+   - Integration testing in BDD way using ginkgo
