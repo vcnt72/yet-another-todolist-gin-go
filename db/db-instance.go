@@ -20,7 +20,7 @@ type DatabaseConfig struct {
 
 // Database is connection instance of database
 type Database struct {
-	connection *gorm.DB
+	Connection *gorm.DB
 }
 
 var once sync.Once
@@ -37,7 +37,7 @@ func Connect() *Database {
 	if database == nil {
 		once.Do(func() {
 			database = &Database{
-				connection: db,
+				Connection: db,
 			}
 		})
 	}
