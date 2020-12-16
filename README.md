@@ -19,7 +19,7 @@ Here what i already learn from this project :
    - Creating database connection
    - Declaring model
 
-What i will to do next :
+What i will do next :
 
 1. Gin
    - Securing using JWT middleware
