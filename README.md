@@ -12,7 +12,7 @@ Here what i already learn from this project :
    - pointer
    - simple control flow
 2. Design Pattern
-   - Singleton
+   - Singleton (Thread-Safe)
 3. Gin
    - Basic project structure
 4. GORM
