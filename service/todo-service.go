@@ -33,5 +33,6 @@ func (todoService *todoService) Create(createDto dto.CreateTodoDto) {
 		Name:        createDto.Name,
 		Description: createDto.Description,
 	}
+
 	todoService.todoRepository.Create(*todo)
 }
