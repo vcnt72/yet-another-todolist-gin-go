@@ -11,5 +11,5 @@ import (
 func ServerRun() {
 	server := gin.Default()
 	todoRoutes(server)
-	server.Run(fmt.Sprintf(":%d", config.GetEnvConfig("server.port")))
+	server.Run(fmt.Sprintf(":%s", config.GetEnvConfig("server.port")))
 }
