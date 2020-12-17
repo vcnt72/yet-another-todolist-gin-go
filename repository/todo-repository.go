@@ -1,8 +1,9 @@
 package repository
 
 import (
-	"github.com/yet-another-todo-list-golang/db"
+	"github.com/yet-another-todo-list-golang/config"
 	"github.com/yet-another-todo-list-golang/model/entity"
+	"gorm.io/gorm"
 )
 
 // TodoRepository is repository for todo db
@@ -12,12 +13,12 @@ type TodoRepository interface {
 }
 
 type todoRepository struct {
-	db *db.Database
+	db *gorm.DB
 }
 
 //NewTodoRepository get new todo repository
 func NewTodoRepository() TodoRepository {
-	db := db.Connect()
+	db := config.DatabaseConnect()
 	return &todoRepository{
 		db: db,
 	}
@@ -25,10 +26,10 @@ func NewTodoRepository() TodoRepository {
 
 func (todoRepository *todoRepository) FindAll() []entity.Todo {
 	var todos []entity.Todo
-	todoRepository.db.Connection.Find(&todos)
+	todoRepository.db.Find(&todos)
 	return todos
 }
 
 func (todoRepository *todoRepository) Create(todo entity.Todo) {
-	todoRepository.db.Connection.Create(&todo)
+	todoRepository.db.Create(&todo)
 }
