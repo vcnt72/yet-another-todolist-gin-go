@@ -5,7 +5,6 @@ import (
 	"log"
 	"sync"
 
-	"github.com/spf13/viper"
 	"github.com/yet-another-todo-list-golang/model/entity"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -13,7 +12,7 @@ import (
 
 // DatabaseConfig database minimal configuration
 type DatabaseConfig struct {
-	DBPort     uint
+	DBPort     string
 	DBHost     string
 	DBDatabase string
 	DBUsername string
@@ -55,18 +54,18 @@ func migrate(db *gorm.DB) {
 //getDatabaseConfig generate database config and return the config
 func getDatabaseConfig() *DatabaseConfig {
 	return &DatabaseConfig{
-		DBPort:     viper.GetUint("db.port"),
-		DBDatabase: viper.GetString("db.database"),
-		DBHost:     viper.GetString("db.host"),
-		DBUsername: viper.GetString("db.username"),
-		DBPassword: viper.GetString("db.password"),
+		DBPort:     GetEnvConfig("db.port"),
+		DBDatabase: GetEnvConfig("db.database"),
+		DBHost:     GetEnvConfig("db.host"),
+		DBUsername: GetEnvConfig("db.username"),
+		DBPassword: GetEnvConfig("db.password"),
 	}
 }
 
 //getDsn generate dsn and return the dsn
 func getDsn() string {
 	config := getDatabaseConfig()
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable TimeZone=Asia/Jakarta",
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Jakarta",
 		config.DBHost,
 		config.DBUsername,
 		config.DBPassword,

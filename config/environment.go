@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/spf13/cast"
 	"github.com/spf13/viper"
 )
 
@@ -23,4 +24,9 @@ func InitEnv() {
 	}
 
 	log.Println("Environment is being loaded successfully")
+}
+
+// GetEnvConfig get key from out of environment package
+func GetEnvConfig(key string) string {
+	return cast.ToString(viper.Get(key))
 }
