@@ -5,21 +5,35 @@ import (
 	"github.com/yet-another-todo-list-golang/controller"
 )
 
-var todoController controller.TodoController
-
-func init() {
-	todoController = controller.NewTodoController()
+type todoRoutes struct {
+	todoController controller.TodoController
 }
 
-func todoRoutes(route *gin.Engine) {
+// NewTodoRoutes get new instance of todo routes
+func NewTodoRoutes() Routes {
+	return &todoRoutes{
+		todoController: controller.NewTodoController(),
+	}
+}
+
+func (tdr *todoRoutes) RouteGroups(route *gin.Engine) {
+	tdr.noAuthRoutes(route)
+	tdr.authRoutes(route)
+}
+
+func (tdr *todoRoutes) noAuthRoutes(route *gin.Engine) {
 	routes := route.Group("/api")
 	{
 		routes.GET("/todo", func(c *gin.Context) {
-			todoController.FindAll(c)
+			tdr.todoController.FindAll(c)
 		})
 
 		routes.POST("/todo", func(c *gin.Context) {
-			todoController.Create(c)
+			tdr.todoController.Create(c)
 		})
 	}
+}
+
+func (tdr *todoRoutes) authRoutes(route *gin.Engine) {
+
 }
