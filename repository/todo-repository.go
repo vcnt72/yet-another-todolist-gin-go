@@ -11,6 +11,7 @@ type TodoRepository interface {
 	FindAll() []entity.Todo
 	Create(todo entity.Todo)
 	FindOne(id string) entity.Todo
+	Update(todo entity.Todo)
 }
 
 type todoRepository struct {

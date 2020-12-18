@@ -13,6 +13,7 @@ type TodoController interface {
 	FindAll(c *gin.Context)
 	Create(c *gin.Context)
 	FindOne(c *gin.Context)
+	Update(c *gin.Context)
 }
 
 type todoController struct {
@@ -49,5 +50,15 @@ func (todoController *todoController) FindOne(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Success",
 		"data":    todoController.todoService.FindOne(id),
+	})
+}
+
+func (todoController *todoController) Update(c *gin.Context) {
+	id := c.Param("id")
+	var updateDto dto.UpdateTodoDto
+	c.ShouldBindJSON(&updateDto)
+	todoController.todoService.Update(id, updateDto)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Success",
 	})
 }

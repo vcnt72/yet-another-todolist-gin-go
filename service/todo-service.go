@@ -11,6 +11,7 @@ type TodoService interface {
 	FindAll() []entity.Todo
 	Create(createDto dto.CreateTodoDto)
 	FindOne(id string) entity.Todo
+	Update(id string, updateDto dto.UpdateTodoDto)
 }
 
 type todoService struct {
@@ -40,4 +41,12 @@ func (todoService *todoService) Create(createDto dto.CreateTodoDto) {
 
 func (todoService *todoService) FindOne(id string) entity.Todo {
 	return todoService.todoRepository.FindOne(id)
+}
+
+func (todoService *todoService) Update(id string, updateDto dto.UpdateTodoDto) {
+	todo := todoService.FindOne(id)
+	todo.Name = updateDto.Name
+	todo.Description = updateDto.Description
+	todo.Status = updateDto.Status
+	todoService.todoRepository.Update(todo)
 }
