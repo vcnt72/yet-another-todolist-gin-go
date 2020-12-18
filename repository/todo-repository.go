@@ -12,6 +12,7 @@ type TodoRepository interface {
 	Create(todo entity.Todo)
 	FindOne(id string) entity.Todo
 	Update(todo entity.Todo)
+	Delete(id string)
 }
 
 type todoRepository struct {
@@ -44,4 +45,10 @@ func (todoRepository *todoRepository) FindOne(id string) entity.Todo {
 	var todo entity.Todo
 	todoRepository.db.First(&todo, "id = ?", id)
 	return todo
+}
+
+func (todoRepository *todoRepository) Delete(id string) {
+	// var todo entity.Todo
+
+	todoRepository.db.Delete(&entity.Todo{}, "id = ?", id)
 }

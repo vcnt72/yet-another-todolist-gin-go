@@ -39,6 +39,10 @@ func (tdr *todoRoutes) noAuthRoutes(route *gin.Engine) {
 		routes.PUT("/todo/:id", func(c *gin.Context) {
 			tdr.todoController.Update(c)
 		})
+
+		routes.DELETE("/todo/:id", func(c *gin.Context) {
+			tdr.todoController.Delete(c)
+		})
 	}
 }
 

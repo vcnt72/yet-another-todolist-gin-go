@@ -14,6 +14,7 @@ type TodoController interface {
 	Create(c *gin.Context)
 	FindOne(c *gin.Context)
 	Update(c *gin.Context)
+	Delete(c *gin.Context)
 }
 
 type todoController struct {
@@ -58,6 +59,15 @@ func (todoController *todoController) Update(c *gin.Context) {
 	var updateDto dto.UpdateTodoDto
 	c.ShouldBindJSON(&updateDto)
 	todoController.todoService.Update(id, updateDto)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Success",
+	})
+}
+
+func (todoController *todoController) Delete(c *gin.Context) {
+	id := c.Param("id")
+
+	todoController.todoService.Delete(id)
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Success",
 	})
