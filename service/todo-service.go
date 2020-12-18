@@ -10,6 +10,7 @@ import (
 type TodoService interface {
 	FindAll() []entity.Todo
 	Create(createDto dto.CreateTodoDto)
+	FindOne(id string) entity.Todo
 }
 
 type todoService struct {
@@ -35,4 +36,8 @@ func (todoService *todoService) Create(createDto dto.CreateTodoDto) {
 	}
 
 	todoService.todoRepository.Create(*todo)
+}
+
+func (todoService *todoService) FindOne(id string) entity.Todo {
+	return todoService.todoRepository.FindOne(id)
 }

@@ -31,6 +31,10 @@ func (tdr *todoRoutes) noAuthRoutes(route *gin.Engine) {
 		routes.POST("/todo", func(c *gin.Context) {
 			tdr.todoController.Create(c)
 		})
+
+		routes.GET("/todo/:id", func(c *gin.Context) {
+			tdr.todoController.FindOne(c)
+		})
 	}
 }
 

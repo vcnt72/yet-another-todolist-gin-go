@@ -12,6 +12,7 @@ import (
 type TodoController interface {
 	FindAll(c *gin.Context)
 	Create(c *gin.Context)
+	FindOne(c *gin.Context)
 }
 
 type todoController struct {
@@ -40,5 +41,13 @@ func (todoController *todoController) Create(c *gin.Context) {
 	todoController.todoService.Create(createDto)
 	c.JSON(http.StatusCreated, gin.H{
 		"message": "Success",
+	})
+}
+
+func (todoController *todoController) FindOne(c *gin.Context) {
+	id := c.Param("id")
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Success",
+		"data":    todoController.todoService.FindOne(id),
 	})
 }

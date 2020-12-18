@@ -10,6 +10,7 @@ import (
 type TodoRepository interface {
 	FindAll() []entity.Todo
 	Create(todo entity.Todo)
+	FindOne(id string) entity.Todo
 }
 
 type todoRepository struct {
@@ -32,4 +33,14 @@ func (todoRepository *todoRepository) FindAll() []entity.Todo {
 
 func (todoRepository *todoRepository) Create(todo entity.Todo) {
 	todoRepository.db.Create(&todo)
+}
+
+func (todoRepository *todoRepository) Update(todo entity.Todo) {
+	todoRepository.db.Save(&todo)
+}
+
+func (todoRepository *todoRepository) FindOne(id string) entity.Todo {
+	var todo entity.Todo
+	todoRepository.db.First(&todo, "id = ?", id)
+	return todo
 }
