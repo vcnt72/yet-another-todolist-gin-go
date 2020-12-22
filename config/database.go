@@ -48,7 +48,10 @@ func initialize() *gorm.DB {
 
 // Migrate orm db wrapper for autoloading the table
 func migrate(db *gorm.DB) {
-	db.AutoMigrate(&entity.Todo{})
+	err := db.AutoMigrate(&entity.Todo{}, &entity.User{})
+	if err != nil {
+		log.Fatal(err.Error())
+	}
 }
 
 //getDatabaseConfig generate database config and return the config
