@@ -7,6 +7,7 @@ import (
 	"github.com/yet-another-todo-list-golang/helper"
 	"github.com/yet-another-todo-list-golang/service"
 	"gorm.io/gorm"
+	"log"
 	"net/http"
 )
 
@@ -31,12 +32,13 @@ func JwtAuth() gin.HandlerFunc {
 				context.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 					"message": "Unauthorized",
 				})
-
 				return
 			}
+
 			context.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 				"message": "Unknown error",
 			})
+			log.Panic(err.Error())
 			return
 		}
 
