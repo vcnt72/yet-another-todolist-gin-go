@@ -12,6 +12,7 @@ import (
 type UserService interface {
 	Login(loginDto dto.LoginDto) (error, string, entity.User)
 	Register(registerDto dto.RegisterUserDto) (error, entity.User)
+	GetOne(id string) (error, entity.User)
 }
 
 type userService struct {
@@ -69,4 +70,14 @@ func (userService *userService) Register(registerDto dto.RegisterUserDto) (error
 		return err, result
 	}
 	return nil, result
+}
+
+func (userService *userService) GetOne(id string) (error, entity.User) {
+	err, user := userService.userRepository.FindById(id)
+
+	if err != nil {
+		return err, user
+	}
+
+	return nil, user
 }

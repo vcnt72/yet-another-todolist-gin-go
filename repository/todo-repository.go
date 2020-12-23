@@ -4,12 +4,13 @@ import (
 	"github.com/yet-another-todo-list-golang/config"
 	"github.com/yet-another-todo-list-golang/model/entity"
 	"gorm.io/gorm"
+	"log"
 )
 
 // TodoRepository is repository for todo db
 type TodoRepository interface {
 	FindAll() []entity.Todo
-	Create(todo entity.Todo)
+	Create(todo entity.Todo, user entity.User) error
 	FindOne(id string) entity.Todo
 	Update(todo entity.Todo)
 	Delete(id string)
@@ -33,8 +34,20 @@ func (todoRepository *todoRepository) FindAll() []entity.Todo {
 	return todos
 }
 
-func (todoRepository *todoRepository) Create(todo entity.Todo) {
-	todoRepository.db.Create(&todo)
+func (todoRepository *todoRepository) Create(todo entity.Todo, user entity.User) error {
+
+	err := todoRepository.db.Model(&user).Association("Todos").Append(&todo)
+	log.Println(user)
+	log.Println(todo)
+	if err != nil {
+		log.Panic(err.Error())
+		return err
+	}
+	if err != nil {
+		log.Panic(err.Error())
+		return err
+	}
+	return nil
 }
 
 func (todoRepository *todoRepository) Update(todo entity.Todo) {

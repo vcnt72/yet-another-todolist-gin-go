@@ -2,6 +2,7 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/yet-another-todo-list-golang/api/middleware"
 	"github.com/yet-another-todo-list-golang/controller"
 )
 
@@ -22,7 +23,11 @@ func (tdr *todoRoutes) RouteGroups(route *gin.Engine) {
 }
 
 func (tdr *todoRoutes) noAuthRoutes(route *gin.Engine) {
-	routes := route.Group("/api")
+
+}
+
+func (tdr *todoRoutes) authRoutes(route *gin.Engine) {
+	routes := route.Group("/api", middleware.JwtAuth())
 	{
 		routes.GET("/todo", func(c *gin.Context) {
 			tdr.todoController.FindAll(c)
@@ -44,8 +49,4 @@ func (tdr *todoRoutes) noAuthRoutes(route *gin.Engine) {
 			tdr.todoController.Delete(c)
 		})
 	}
-}
-
-func (tdr *todoRoutes) authRoutes(route *gin.Engine) {
-
 }

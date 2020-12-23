@@ -10,4 +10,5 @@ type User struct {
 	Email       string          `json:"email" gorm:"type:varchar(255)"`
 	Password    string          `json:"-" gorm:"type:varchar(255)"`
 	DateOfBirth date.DateString `json:"dob" gorm:"type:timestamptz"`
+	Todos       []Todo          `json:"-"  json:"todos"`
 }

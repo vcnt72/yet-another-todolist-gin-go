@@ -4,12 +4,13 @@ import (
 	"github.com/yet-another-todo-list-golang/model/dto"
 	"github.com/yet-another-todo-list-golang/model/entity"
 	"github.com/yet-another-todo-list-golang/repository"
+	"log"
 )
 
 // TodoService service of todo
 type TodoService interface {
 	FindAll() []entity.Todo
-	Create(createDto dto.CreateTodoDto)
+	Create(createDto dto.CreateTodoDto, user entity.User) error
 	FindOne(id string) entity.Todo
 	Update(id string, updateDto dto.UpdateTodoDto)
 	Delete(id string)
@@ -31,13 +32,19 @@ func (todoService *todoService) FindAll() []entity.Todo {
 	return todoService.todoRepository.FindAll()
 }
 
-func (todoService *todoService) Create(createDto dto.CreateTodoDto) {
+func (todoService *todoService) Create(createDto dto.CreateTodoDto, user entity.User) error {
 	todo := &entity.Todo{
 		Name:        createDto.Name,
 		Description: createDto.Description,
 	}
 
-	todoService.todoRepository.Create(*todo)
+	err := todoService.todoRepository.Create(*todo, user)
+
+	if err != nil {
+		log.Panic(err.Error())
+		return err
+	}
+	return nil
 }
 
 func (todoService *todoService) FindOne(id string) entity.Todo {
