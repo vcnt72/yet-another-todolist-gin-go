@@ -30,19 +30,14 @@ func NewTodoRepository() TodoRepository {
 
 func (todoRepository *todoRepository) FindAll() []entity.Todo {
 	var todos []entity.Todo
-	todoRepository.db.Find(&todos)
+	todoRepository.db.Joins("User").Find(&todos)
 	return todos
 }
 
 func (todoRepository *todoRepository) Create(todo entity.Todo, user entity.User) error {
 
 	err := todoRepository.db.Model(&user).Association("Todos").Append(&todo)
-	log.Println(user)
-	log.Println(todo)
-	if err != nil {
-		log.Panic(err.Error())
-		return err
-	}
+
 	if err != nil {
 		log.Panic(err.Error())
 		return err
