@@ -17,8 +17,15 @@ func init() {
 // ServerRun run server
 func ServerRun() {
 	server := gin.Default()
-	server.Use(cors.Default())
+	server.Use(cors.New(corsConfig()))
 	todo.RouteGroups(server)
 	user.RouteGroups(server)
 	server.Run(":" + config.GetEnvConfig("server.port"))
+}
+
+func corsConfig() cors.Config {
+	corsConfig := cors.DefaultConfig()
+	corsConfig.AllowCredentials = true
+	corsConfig.AddAllowMethods("OPTIONS")
+	return corsConfig
 }
