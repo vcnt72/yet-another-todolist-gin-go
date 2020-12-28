@@ -1,17 +1,9 @@
 package config
 
-import (
-	"fmt"
-	"log"
-	"sync"
+import "fmt"
 
-	"github.com/yet-another-todo-list-golang/model/entity"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
-)
-
-// DatabaseConfig database minimal configuration
-type DatabaseConfig struct {
+// databaseConfig database minimal configuration
+type databaseConfig struct {
 	DBPort     string
 	DBHost     string
 	DBDatabase string
@@ -19,44 +11,9 @@ type DatabaseConfig struct {
 	DBPassword string
 }
 
-var connection *gorm.DB
-var once sync.Once
-
-// DatabaseConnect initialize database if not being initialize else get connection
-func DatabaseConnect() *gorm.DB {
-	if connection == nil {
-		once.Do(func() {
-			connection = initialize()
-		})
-	}
-
-	return connection
-
-}
-
-// init initialize db function
-func initialize() *gorm.DB {
-	dsn := getDsn()
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	if err != nil {
-		panic("Failed to connect database")
-	}
-	migrate(db)
-	log.Println("Database Connection is being initialized successfully")
-	return db
-}
-
-// Migrate orm db wrapper for autoloading the table
-func migrate(db *gorm.DB) {
-	err := db.AutoMigrate(&entity.Todo{}, &entity.User{})
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-}
-
 //getDatabaseConfig generate database config and return the config
-func getDatabaseConfig() *DatabaseConfig {
-	return &DatabaseConfig{
+func getDatabaseConfig() *databaseConfig {
+	return &databaseConfig{
 		DBPort:     GetEnvConfig("db.port"),
 		DBDatabase: GetEnvConfig("db.database"),
 		DBHost:     GetEnvConfig("db.host"),
@@ -66,7 +23,7 @@ func getDatabaseConfig() *DatabaseConfig {
 }
 
 //getDsn generate dsn and return the dsn
-func getDsn() string {
+func GetDsn() string {
 	config := getDatabaseConfig()
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Jakarta",
 		config.DBHost,
@@ -75,5 +32,6 @@ func getDsn() string {
 		config.DBDatabase,
 		config.DBPort,
 	)
+
 	return dsn
 }

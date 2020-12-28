@@ -1,6 +1,8 @@
 package config
 
+import "github.com/yet-another-todo-list-golang/db"
+
 func init() {
-	InitEnv()
-	DatabaseConnect()
+	initEnv()
+	db.GetConnection()
 }

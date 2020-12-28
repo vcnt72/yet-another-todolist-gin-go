@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/yet-another-todo-list-golang/config"
+	"github.com/yet-another-todo-list-golang/db"
 	"github.com/yet-another-todo-list-golang/model/entity"
 	"gorm.io/gorm"
 	"log"
@@ -17,26 +17,26 @@ type TodoRepository interface {
 }
 
 type todoRepository struct {
-	db *gorm.DB
+	connection *gorm.DB
 }
 
 //NewTodoRepository get new todo repository
 func NewTodoRepository() TodoRepository {
-	db := config.DatabaseConnect()
+	connection := db.GetConnection()
 	return &todoRepository{
-		db: db,
+		connection: connection,
 	}
 }
 
 func (todoRepository *todoRepository) FindAll() []entity.Todo {
 	var todos []entity.Todo
-	todoRepository.db.Joins("User").Find(&todos)
+	todoRepository.connection.Joins("User").Find(&todos)
 	return todos
 }
 
 func (todoRepository *todoRepository) Create(todo entity.Todo, user entity.User) error {
 
-	err := todoRepository.db.Model(&user).Association("Todos").Append(&todo)
+	err := todoRepository.connection.Model(&user).Association("Todos").Append(&todo)
 
 	if err != nil {
 		log.Panic(err.Error())
@@ -46,17 +46,15 @@ func (todoRepository *todoRepository) Create(todo entity.Todo, user entity.User)
 }
 
 func (todoRepository *todoRepository) Update(todo entity.Todo) {
-	todoRepository.db.Save(&todo)
+	todoRepository.connection.Save(&todo)
 }
 
 func (todoRepository *todoRepository) FindOne(id string) entity.Todo {
 	var todo entity.Todo
-	todoRepository.db.First(&todo, "id = ?", id)
+	todoRepository.connection.First(&todo, "id = ?", id)
 	return todo
 }
 
 func (todoRepository *todoRepository) Delete(id string) {
-	// var todo entity.Todo
-
-	todoRepository.db.Delete(&entity.Todo{}, "id = ?", id)
+	todoRepository.connection.Delete(&entity.Todo{}, "id = ?", id)
 }

@@ -9,8 +9,8 @@ import (
 	"github.com/spf13/viper"
 )
 
-//InitEnv env initialize config wrapper
-func InitEnv() {
+//initEnv env initialize config wrapper
+func initEnv() {
 	viper.SetConfigName("env")
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath(".")
