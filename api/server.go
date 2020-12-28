@@ -3,7 +3,6 @@ package api
 import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/yet-another-todo-list-golang/config"
 )
 
 var todo Routes
@@ -14,13 +13,13 @@ func init() {
 	user = NewUserRoutes()
 }
 
-// ServerRun run server
-func ServerRun() {
+// Server Setting up server
+func Server() *gin.Engine {
 	server := gin.Default()
 	server.Use(cors.New(corsConfig()))
 	todo.RouteGroups(server)
 	user.RouteGroups(server)
-	server.Run(":" + config.GetEnvConfig("server.port"))
+	return server
 }
 
 func corsConfig() cors.Config {

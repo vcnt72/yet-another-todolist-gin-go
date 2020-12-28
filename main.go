@@ -1,7 +1,14 @@
 package main
 
-import "github.com/yet-another-todo-list-golang/api"
+import (
+	"github.com/yet-another-todo-list-golang/api"
+	"github.com/yet-another-todo-list-golang/config"
+)
 
 func main() {
-	api.ServerRun()
+	server := api.Server()
+	err := server.Run(config.GetEnvConfig("server.port"))
+	if err != nil {
+		panic(err.Error())
+	}
 }
