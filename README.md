@@ -13,19 +13,19 @@ Here what i already learn from this project :
    - simple control flow
 2. Design Pattern
    - Singleton (Thread-Safe)
+   - MVC
 3. Gin
    - Basic project structure
+   - Securing using JWT middleware
 4. GORM
    - Creating database connection
    - Declaring model
+   - CRUD
 
 What i will do next :
 
 1. Gin
-   - Securing using JWT middleware
    - Using cors
-2. GORM
-   - CRUD
 3. Adding CI/CD
 4. Testing
    - Unit testing using built-in go package
