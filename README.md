@@ -24,10 +24,8 @@ Here what i already learn from this project :
 
 What i will do next :
 
-1. Gin
-   - Using cors
-3. Adding CI/CD
-4. Testing
+1. Adding CI/CD
+2. Testing
    - Unit testing using built-in go package
    - Integration testing using built-in go package
    - Unit testing in BDD way using ginkgo
