@@ -4,6 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/yet-another-todo-list-golang/api/middleware"
 	"github.com/yet-another-todo-list-golang/controller"
+	"github.com/yet-another-todo-list-golang/repository"
+	"github.com/yet-another-todo-list-golang/service"
 )
 
 type todoRoutes struct {
@@ -12,8 +14,11 @@ type todoRoutes struct {
 
 // NewTodoRoutes get new instance of todo routes
 func NewTodoRoutes() Routes {
+	todoRepository := repository.NewTodoRepository()
+	todoService := service.NewTodoService(todoRepository)
+	todoController := controller.NewTodoController(todoService)
 	return &todoRoutes{
-		todoController: controller.NewTodoController(),
+		todoController: todoController,
 	}
 }
 

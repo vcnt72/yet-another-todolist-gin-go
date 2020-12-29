@@ -23,18 +23,24 @@ type todoController struct {
 }
 
 //NewTodoController get new controller of todo
-func NewTodoController() TodoController {
-	todoService := service.NewTodoService()
-
+func NewTodoController(todoService service.TodoService) TodoController {
 	return &todoController{
 		todoService: todoService,
 	}
 }
 
 func (todoController *todoController) FindAll(c *gin.Context) {
+	err, todos := todoController.todoService.FindAll()
+
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"message": err.Error(),
+		})
+	}
+
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Success",
-		"data":    todoController.todoService.FindAll(),
+		"data":    todos,
 	})
 }
 
@@ -62,9 +68,15 @@ func (todoController *todoController) Create(c *gin.Context) {
 
 func (todoController *todoController) FindOne(c *gin.Context) {
 	id := c.Param("id")
+	err, todo := todoController.todoService.FindOne(id)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"message": err.Error(),
+		})
+	}
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Success",
-		"data":    todoController.todoService.FindOne(id),
+		"data":    todo,
 	})
 }
 

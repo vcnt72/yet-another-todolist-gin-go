@@ -15,7 +15,9 @@ require (
 	github.com/rickb777/date v1.15.3
 	github.com/spf13/cast v1.3.0
 	github.com/spf13/viper v1.7.1
+	github.com/stretchr/testify v1.6.1
 	github.com/ugorji/go v1.2.2 // indirect
+	github.com/vektra/mockery/v2 v2.5.1 // indirect
 	golang.org/x/crypto v0.0.0-20201221181555-eec23a3978ad // indirect
 	golang.org/x/sys v0.0.0-20201221093633-bc327ba9c2f0 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect

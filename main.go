@@ -7,7 +7,7 @@ import (
 
 func main() {
 	server := api.Server()
-	err := server.Run(config.GetEnvConfig("server.port"))
+	err := server.Run(":" + config.GetEnvConfig("server.port"))
 	if err != nil {
 		panic(err.Error())
 	}

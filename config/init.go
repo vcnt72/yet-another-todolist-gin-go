@@ -1,8 +1,8 @@
 package config
 
-import "github.com/yet-another-todo-list-golang/db"
+import "log"
 
-func init() {
+func Init() {
+	log.Println("Initiating configuration")
 	initEnv()
-	db.GetConnection()
 }

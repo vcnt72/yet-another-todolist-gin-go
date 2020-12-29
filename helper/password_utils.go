@@ -15,6 +15,5 @@ func HashPassword(value string) (error, string) {
 
 func VerifyPassword(hash string, password string) bool {
 	valid, _ := argon2pw.CompareHashWithPassword(hash, password)
-
 	return valid
 }

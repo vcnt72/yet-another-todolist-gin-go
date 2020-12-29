@@ -3,6 +3,7 @@ package api
 import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/yet-another-todo-list-golang/config"
 )
 
 var todo Routes
@@ -15,16 +16,10 @@ func init() {
 
 // Server Setting up server
 func Server() *gin.Engine {
+	config.Init()
 	server := gin.Default()
-	server.Use(cors.New(corsConfig()))
+	server.Use(cors.Default())
 	todo.RouteGroups(server)
 	user.RouteGroups(server)
 	return server
-}
-
-func corsConfig() cors.Config {
-	corsConfig := cors.DefaultConfig()
-	corsConfig.AllowCredentials = true
-	corsConfig.AddAllowMethods("OPTIONS")
-	return corsConfig
 }
