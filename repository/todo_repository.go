@@ -45,7 +45,6 @@ func (todoRepository *todoRepository) Create(todo entity.Todo, user entity.User)
 	err := todoRepository.connection.Model(&user).Association("Todos").Append(&todo)
 
 	if err != nil {
-		log.Fatal(err.Error())
 		return err
 	}
 	return nil

@@ -39,17 +39,17 @@ func (todoService *todoService) FindAll() (error, []entity.Todo) {
 }
 
 func (todoService *todoService) Create(createDto dto.CreateTodoDto, user entity.User) error {
-	todo := &entity.Todo{
+	todo := entity.Todo{
 		Name:        createDto.Name,
 		Description: createDto.Description,
 	}
 
-	err := todoService.todoRepository.Create(*todo, user)
+	err := todoService.todoRepository.Create(todo, user)
 
 	if err != nil {
-		log.Fatal(err.Error())
 		return err
 	}
+
 	return nil
 }
 
@@ -57,7 +57,6 @@ func (todoService *todoService) FindOne(id string) (error, entity.Todo) {
 	err, todo := todoService.todoRepository.FindOne(id)
 
 	if err != nil {
-		log.Fatal(err.Error())
 		return err, todo
 	}
 
