@@ -3,6 +3,8 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/yet-another-todo-list-golang/controller"
+	"github.com/yet-another-todo-list-golang/repository"
+	"github.com/yet-another-todo-list-golang/service"
 )
 
 type userRoutes struct {
@@ -10,8 +12,11 @@ type userRoutes struct {
 }
 
 func NewUserRoutes() Routes {
+	userRepository := repository.NewUserRepository()
+	userService := service.NewUserService(userRepository)
+	userController := controller.NewUserController(userService)
 	return &userRoutes{
-		userController: controller.NewUserController(),
+		userController: userController,
 	}
 }
 
