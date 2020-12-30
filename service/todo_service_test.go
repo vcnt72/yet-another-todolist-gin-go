@@ -238,5 +238,39 @@ func TestTodoUpdate(t *testing.T) {
 }
 
 func TestTodoDelete(t *testing.T) {
+	todoRepository := new(mocks.TodoRepository)
+	testCases := []struct {
+		name      string
+		input     string
+		expected  error
+		deleteErr error
+	}{
+		{
+			name:      "Delete Todo",
+			input:     todos[1].ID,
+			expected:  nil,
+			deleteErr: nil,
+		},
+		{
+			name:      "Database error",
+			input:     todos[1].ID,
+			expected:  errors.New("database error"),
+			deleteErr: errors.New("database error"),
+		},
+	}
 
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			todoService := service.NewTodoService(todoRepository)
+			todoRepository.On("Delete", tc.input).Return(tc.deleteErr)
+			err := todoService.Delete(tc.input)
+
+			if err != nil {
+				assert.EqualError(t, tc.expected, err.Error())
+				return
+			}
+
+			assert.Equal(t, tc.expected, nil)
+		})
+	}
 }
